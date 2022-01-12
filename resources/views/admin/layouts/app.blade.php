@@ -70,7 +70,7 @@
 
             <!-- Nav Item - Anggota Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/anggota">
+                <a class="nav-link collapsed" href="/member">
                     <i class="fas fa-fw fa-users"></i>
                     <span>Anggota</span>
                 </a>
@@ -83,7 +83,7 @@
                     <span>Pengunjung</span>
                 </a>
             </li>
-            
+
             <!-- Nav Item - Koleksi Buku Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/koleksi">
@@ -103,7 +103,7 @@
 
             <!-- Nav Item - Pinjam Buku Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="/pinjam">
+                <a class="nav-link" href="/peminjaman">
                     <i class="fas fa-fw fa-book"></i>
                     <span>Pinjam Buku</span></a>
             </li>

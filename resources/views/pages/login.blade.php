@@ -20,7 +20,7 @@
 
 </head>
 
-<body class="bg-gradient-warning">
+<body class="bg-gradient-danger">
 
     <div class="container">
 
@@ -68,7 +68,7 @@
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
-                                        <button type="submit" class="btn btn-warning btn-user btn-block">
+                                        <button type="submit" class="btn btn-danger btn-user btn-block">
                                             Login
                                         </button>
                                         <hr>

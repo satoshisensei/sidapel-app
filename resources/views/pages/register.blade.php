@@ -20,7 +20,7 @@
 
 </head>
 
-<body class="bg-gradient-warning">
+<body class="bg-gradient-danger">
 
     <div class="container container-fluid d-flex justify-content-center">
 
@@ -74,7 +74,7 @@
                                             id="password-confirm" placeholder="Repeat Password">
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-warning btn-user btn-block">
+                                <button type="submit" class="btn btn-danger btn-user btn-block">
                                     Register Account
                                 </button>
                                 <hr>
