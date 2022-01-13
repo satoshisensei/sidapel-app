@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
+use App\Models\Category;
+use App\Models\Pekerjaan;
+use App\Models\Pendidikan;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
@@ -26,7 +29,11 @@ class MemberController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.member.create',[
+            'categories' => Category::get(),
+            'pendidikans' => Pendidikan::get(),
+            'pekerjaans' => Pekerjaan::get()
+        ]);
     }
 
     /**
@@ -37,7 +44,18 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'category_id' => 'required',
+            'pendidikan_id' => 'required',
+            'pekerjaan_id' => 'required',
+            'nama' => 'required|max:255',
+            'nomor' => 'required',
+        ]);
+
+        $validate['user_id'] = auth()->user()->id;
+
+        Member::create($validate);
+        return redirect('/member')->with('success','Added Successfully!');
     }
 
     /**
