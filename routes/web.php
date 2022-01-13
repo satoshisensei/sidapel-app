@@ -21,7 +21,7 @@ use App\Http\Controllers\PengembalianController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('landing-page');
 });
 
 Auth::routes();
