@@ -48,7 +48,7 @@
       }
     </style>
 
-    <title>Landing Page</title>
+    <title>Sidapel | Landing Page</title>
   </head>
   <body class="bg-dark">
     <!-- Navbar -->
