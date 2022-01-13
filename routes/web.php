@@ -3,9 +3,11 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\MemberController;
+use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\KoleksiController;
-use App\Http\Controllers\PengunjungController;
+use App\Http\Controllers\KunjunganController;
+use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\PengembalianController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,13 +29,19 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth'])->group(function () {
     // Data Dasar
-    Route::resource('/member', MemberController::class);
-    Route::get('/dataanggota',[MemberController::class, 'data'])->name('anggota-data');
+    Route::resource('/member', AnggotaController::class);
+    Route::get('/dataanggota',[AnggotaController::class, 'data'])->name('anggota-data');
 
-    Route::resource('/pengunjung', PengunjungController::class);
-    Route::get('/datapengunjung',[PengunjungController::class, 'data'])->name('pengunjung-data');
+    Route::resource('/pengunjung', KunjunganController::class);
+    Route::get('/datapengunjung',[KunjunganController::class, 'data'])->name('pengunjung-data');
 
     Route::resource('/koleksi',KoleksiController::class);
     Route::get('/datakoleksi',[KoleksiController::class, 'data'])->name('koleksi-data');
 
+    // Data Tambahan
+    Route::resource('/peminjaman', PeminjamanController::class);
+    Route::get('/datapeminjam',[PeminjamanController::class, 'data'])->name('pinjam-data');
+
+    Route::resource('/pengembalian', PengembalianController::class);
+    Route::get('/datapengembalian',[PengembalianController::class, 'data'])->name('pengembalian-data');
 });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Gender;
 use App\Models\Category;
 use App\Models\Pekerjaan;
 use App\Models\Pendidikan;
@@ -9,7 +10,7 @@ use App\Models\Pengunjung;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
-class PengunjungController extends Controller
+class KunjunganController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +20,7 @@ class PengunjungController extends Controller
     public function index()
     {
         return view('admin.pengunjung.index',[
-            'pengunjungs' => Pengunjung::latest()->with(['category','pendidikan','pekerjaan'])->get(),
+            'pengunjungs' => Pengunjung::latest()->with(['category','pendidikan','pekerjaan','gender'])->get(),
         ]);
     }
 
@@ -33,7 +34,8 @@ class PengunjungController extends Controller
         return view('admin.pengunjung.create',[
             'categories' => Category::get(),
             'pendidikans' => Pendidikan::get(),
-            'pekerjaans' => Pekerjaan::get()
+            'pekerjaans' => Pekerjaan::get(),
+            'genders' => Gender::get()
         ]);
     }
 
@@ -46,8 +48,9 @@ class PengunjungController extends Controller
     public function store(Request $request)
     {
         $validate = $request->validate([
-            'nomor' => 'required|max:255',
-            'uraian' => 'required|max:255'
+            'nama' => 'required|max:255',
+            'nomor' => 'required',
+            'tujuan' => 'required',
         ]);
 
         if($request->category){
@@ -60,6 +63,10 @@ class PengunjungController extends Controller
 
         if($request->pekerjaan){
             $validate['pekerjaan_id'] = 'required';
+        }
+
+        if($request->gender){
+            $validate['gender_id'] = 'required';
         }
 
         $validate['user_id'] = auth()->user()->id;
@@ -77,7 +84,7 @@ class PengunjungController extends Controller
     public function show(Pengunjung $pengunjung)
     {
         return view('admin.pengunjung.show',[
-            'pengunjungs' => Pengunjung::with(['category','pendidikan','pekerjaan'])->find($pengunjung),
+            'pengunjungs' => Pengunjung::with(['category','pendidikan','pekerjaan','gender'])->find($pengunjung),
         ]);
     }
 
@@ -93,7 +100,8 @@ class PengunjungController extends Controller
             'pengunjungs' => Pengunjung::find($pengunjung),
             'categories' => Category::get(),
             'pendidikans' => Pendidikan::get(),
-            'pekerjaans' => Pekerjaan::get()
+            'pekerjaans' => Pekerjaan::get(),
+            'genders' => Gender::get()
         ]);
     }
 
@@ -107,8 +115,9 @@ class PengunjungController extends Controller
     public function update(Request $request, Pengunjung $pengunjung)
     {
         $rules = [
+            'nama' => 'required|max:255',
             'nomor' => 'required',
-            'uraian' => 'required'
+            'tujuan' => 'required',
         ];
 
         if($pengunjung->category != $request->category){
@@ -119,9 +128,12 @@ class PengunjungController extends Controller
             $rules['pendidikan_id'] = 'required';
         }
 
-
         if($pengunjung->pekerjaan != $request->pekerjaan){
             $rules['pekerjaan_id'] = 'required';
+        }
+
+        if($pengunjung->gender != $request->gender){
+            $rules['gender_id'] = 'required';
         }
 
         $validate['user_id'] = auth()->user()->id;

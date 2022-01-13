@@ -16,6 +16,7 @@ class MemberFactory extends Factory
         return [
             'nama' => $this->faker->name(),
             'nomor' => $this->faker->numerify('M##-##'),
+            'gender_id' => mt_rand(1,2),
             'category_id' => mt_rand(1,3),
             'pendidikan_id' => mt_rand(1,8),
             'pekerjaan_id' => mt_rand(1,4)

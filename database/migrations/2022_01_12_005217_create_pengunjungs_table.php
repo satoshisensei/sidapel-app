@@ -16,10 +16,12 @@ class CreatePengunjungsTable extends Migration
         Schema::create('pengunjungs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id');
+            $table->foreignId('gender_id');
             $table->foreignId('pendidikan_id');
             $table->foreignId('pekerjaan_id');
             $table->string('nama');
             $table->string('nomor');
+            $table->string('tujuan');
             $table->timestamps();
         });
     }

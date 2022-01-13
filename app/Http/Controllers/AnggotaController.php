@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Gender;
 use App\Models\Member;
 use App\Models\Category;
 use App\Models\Pekerjaan;
 use App\Models\Pendidikan;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
-class MemberController extends Controller
+class AnggotaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +20,7 @@ class MemberController extends Controller
     public function index()
     {
         return view('admin.member.index',[
-            'anggotas' => Member::latest()->with(['category','pendidikan','pekerjaan'])->get()
+            'anggotas' => Member::latest()->with(['category','pendidikan','pekerjaan','gender'])->get()
         ]);
     }
 
@@ -32,7 +34,8 @@ class MemberController extends Controller
         return view('admin.member.create',[
             'categories' => Category::get(),
             'pendidikans' => Pendidikan::get(),
-            'pekerjaans' => Pekerjaan::get()
+            'pekerjaans' => Pekerjaan::get(),
+            'genders' => Gender::get()
         ]);
     }
 
@@ -45,11 +48,12 @@ class MemberController extends Controller
     public function store(Request $request)
     {
         $validate = $request->validate([
+            'nama' => 'required|max:255',
+            'nomor' => 'required',
             'category_id' => 'required',
             'pendidikan_id' => 'required',
             'pekerjaan_id' => 'required',
-            'nama' => 'required|max:255',
-            'nomor' => 'required',
+            'gender_id' => 'required'
         ]);
 
         $validate['user_id'] = auth()->user()->id;
@@ -67,7 +71,7 @@ class MemberController extends Controller
     public function show(Member $member)
     {
         return view('admin.member.show',[
-            'anggotas' => Member::with(['category','pendidikan','pekerjaan'])->find($member),
+            'anggotas' => Member::with(['category','pendidikan','pekerjaan','gender'])->find($member),
         ]);
     }
 
@@ -83,7 +87,8 @@ class MemberController extends Controller
             'members' => Member::find($member),
             'categories' => Category::get(),
             'pendidikans' => Pendidikan::get(),
-            'pekerjaans' => Pekerjaan::get()
+            'pekerjaans' => Pekerjaan::get(),
+            'genders' => Gender::get()
         ]);
     }
 
@@ -97,20 +102,23 @@ class MemberController extends Controller
     public function update(Request $request, Member $member)
     {
         $rules = [
+            'nama' => 'required|max:255',
             'nomor' => 'required',
-            'uraian' => 'required'
         ];
 
-        if($member->category != $request->category){
+        if($request->category != $member->category){
             $rules['category_id'] = 'required';
         }
 
-        if($member->pendidikan != $request->pendidikan){
+        if($request->gender != $member->gender){
+            $rules['gender_id'] = 'required';
+        }
+
+        if($request->pendidikan != $member->pendidikan){
             $rules['pendidikan_id'] = 'required';
         }
 
-
-        if($member->pekerjaan != $request->pekerjaan){
+        if($request->pekerjaan != $member->pekerjaan){
             $rules['pekerjaan_id'] = 'required';
         }
 
@@ -132,5 +140,10 @@ class MemberController extends Controller
         Member::destroy($member->id);
 
         return redirect('/member')->with('success','Deleted Successfully!');
+    }
+
+    public function data()
+    {
+        return Datatables::of(Member::query())->make(true);
     }
 }

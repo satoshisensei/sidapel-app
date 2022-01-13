@@ -14,8 +14,9 @@
                         <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                         <div class="mb-3">
                             <label for="nama" class="form-label">Nama</label>
-                            <input id="nama" type="hidden" name="nama" value="{{ old('nama',$pengunjungs[0]->nama) }}">
-                            <trix-editor input="nama"></trix-editor>
+                            <input type="text" class="form-control @error('nama')
+                                is-invalid
+                            @enderror" id="nama" name="nama" placeholder="Enter Koleksi..." autofocus required value="{{ old('nama',$pengunjungs[0]->nama) }}">
                             @error('nama')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -24,10 +25,21 @@
                         </div>
                         <div class="mb-3">
                             <label for="nomor" class="form-label">Nomor Pengunjung</label>
-                            <input type="nomor" class="form-control @error('nomor')
+                            <input type="text" class="form-control @error('nomor')
                                 is-invalid
-                            @enderror" id="nomor" name="nomor" placeholder="Masukan Nomor SPPD..." autofocus required value="{{ old('nomor',$pengunjungs[0]->nomor) }}">
+                            @enderror" id="nomor" name="nomor" placeholder="Masukan Nomor..." autofocus required value="{{ old('nomor',$pengunjungs[0]->nomor) }}">
                             @error('nomor')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="tujuan" class="form-label">Tujuan Kunjungan</label>
+                            <input type="text" class="form-control @error('tujuan')
+                                is-invalid
+                            @enderror" id="tujuan" name="tujuan" placeholder="Masukan Tujuan Kunjungan..." autofocus required value="{{ old('tujuan',$pengunjungs[0]->tujuan) }}">
+                            @error('tujuan')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -79,6 +91,23 @@
                                 @endforeach
                             </select>
                             @error('pekerjaan_id')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="gender_id" class="form-label">Kelamin</label>
+                            <select class="form-select" name="gender_id">
+                                @foreach($genders as $gender)
+                                    @if(old('gender_id',$pengunjungs[0]->gender_id) == $gender->id)
+                                        <option value="{{ $gender->id }}" selected>{{ $gender->jenis }}</option>
+                                    @else
+                                        <option value="{{ $gender->id }}">{{ $gender->jenis }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                            @error('gender_id')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>

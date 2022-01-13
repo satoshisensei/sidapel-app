@@ -3,7 +3,7 @@
 
 @section('container')
 <div class="container container-fluid mb-3 d-flex justify-content-center">
-    <h2 class="h3 text-uppercase">Data {{ $pengunjungs[0]->nama }}</h2>
+    <h2 class="h3 text-uppercase">Data {!! $pengunjungs[0]->nama !!}</h2>
 </div>
 <div class="container container-fluid">
     <table class="table table-responsive table-striped d-flex justify-content-center">

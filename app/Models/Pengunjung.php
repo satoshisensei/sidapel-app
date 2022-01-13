@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Gender;
 use App\Models\Category;
 use App\Models\Pekerjaan;
 use App\Models\Pendidikan;
@@ -16,7 +17,7 @@ class Pengunjung extends Model
     protected $table = 'pengunjungs';
     protected $guarded = 'id';
     protected $fillable = [
-        'nama','nomor','category_id','pendidikan_id','pekerjaan_id'
+        'nama','nomor','tujuan','category_id','pendidikan_id','pekerjaan_id','gender_id'
     ];
 
     /**
@@ -47,5 +48,15 @@ class Pengunjung extends Model
     public function pendidikan(): BelongsTo
     {
         return $this->belongsTo(Pendidikan::class);
+    }
+
+    /**
+     * Get the gender that owns the Pengunjung
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function gender(): BelongsTo
+    {
+        return $this->belongsTo(Gender::class);
     }
 }

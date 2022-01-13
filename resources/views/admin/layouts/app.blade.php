@@ -101,11 +101,11 @@
                 Data Tambahan
             </div>
 
-            <!-- Nav Item - Pinjam Buku Menu -->
+            <!-- Nav Item - Peminjaman Buku Menu -->
             <li class="nav-item">
                 <a class="nav-link" href="/peminjaman">
                     <i class="fas fa-fw fa-book"></i>
-                    <span>Pinjam Buku</span></a>
+                    <span>Peminjaman Buku</span></a>
             </li>
 
             <!-- Nav Item - Pengembalian Menu -->
