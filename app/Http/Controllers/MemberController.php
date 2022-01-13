@@ -79,7 +79,12 @@ class MemberController extends Controller
      */
     public function edit(Member $member)
     {
-        //
+        return view('admin.member.edit',[
+            'members' => Member::find($member),
+            'categories' => Category::get(),
+            'pendidikans' => Pendidikan::get(),
+            'pekerjaans' => Pekerjaan::get()
+        ]);
     }
 
     /**
@@ -91,7 +96,29 @@ class MemberController extends Controller
      */
     public function update(Request $request, Member $member)
     {
-        //
+        $rules = [
+            'nomor' => 'required',
+            'uraian' => 'required'
+        ];
+
+        if($member->category != $request->category){
+            $rules['category_id'] = 'required';
+        }
+
+        if($member->pendidikan != $request->pendidikan){
+            $rules['pendidikan_id'] = 'required';
+        }
+
+
+        if($member->pekerjaan != $request->pekerjaan){
+            $rules['pekerjaan_id'] = 'required';
+        }
+
+        $validate['user_id'] = auth()->user()->id;
+        $validate = $request->validate($rules);
+
+        Member::where('id',$member->id)->update($validate);
+        return redirect('/member')->with('success','Updated Successfully!');
     }
 
     /**
@@ -102,6 +129,8 @@ class MemberController extends Controller
      */
     public function destroy(Member $member)
     {
-        //
+        Member::destroy($member->id);
+
+        return redirect('/member')->with('success','Deleted Successfully!');
     }
 }
