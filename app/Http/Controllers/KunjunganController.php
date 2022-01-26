@@ -51,23 +51,11 @@ class KunjunganController extends Controller
             'nama' => 'required|max:255',
             'nomor' => 'required',
             'tujuan' => 'required',
+            'category_id' => 'required',
+            'pendidikan_id' => 'required',
+            'pekerjaan_id' => 'required',
+            'gender_id' => 'required'
         ]);
-
-        if($request->category){
-            $validate['category_id'] = 'required';
-        }
-
-        if($request->pendidikan){
-            $validate['pendidikan_id'] = 'required';
-        }
-
-        if($request->pekerjaan){
-            $validate['pekerjaan_id'] = 'required';
-        }
-
-        if($request->gender){
-            $validate['gender_id'] = 'required';
-        }
 
         $validate['user_id'] = auth()->user()->id;
 
